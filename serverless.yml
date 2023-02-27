@@ -1,0 +1,23 @@
+service: rekognition
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: 
+        - rekognition:DetectLabels
+      Resource: "*"
+    - Effect: Allow
+      Action: 
+        - translate:TranslateText
+      Resource: "*"
+
+functions:
+  img-analyses:
+    handler: index.main
+    events:
+      - httpApi:
+          path: /analysis
+          method: get
